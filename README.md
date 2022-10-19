@@ -1,2 +1,2 @@
 # modal-with-sass
-modal whid sass
+modal with sass

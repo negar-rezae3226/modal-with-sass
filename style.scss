@@ -1,0 +1,134 @@
+$odd-background: #f2e6ff;
+$even-background: #d9b3ff;
+$black: rgba(0, 0, 0, 0.6);
+$white: #fff;
+$gray: #666;
+$dark: #333;
+$body-height: 100vh;
+
+@mixin flex {
+  display: flex;
+  align-items: center;
+}
+@mixin padding {
+  padding: 5px 10px;
+}
+@mixin modal {
+  width: 100%;
+  height: $body-height;
+  left: 0;
+  top: 0;
+}
+@mixin check {
+  background-color: $white;
+  max-width: 400px;
+  width: 100%;
+  height: 280px;
+  padding: 10px 30px;
+  position: absolute;
+  left: calc(50% - 200px);
+  top: 12%;
+  border-radius: 4px;
+  z-index: 999;
+  pointer-events: auto;
+  cursor: auto;
+  box-shadow: 0 3px 7px $black;
+}
+@mixin modal-close {
+  color: $gray;
+  position: absolute;
+  right: 2px;
+  top: 0;
+  padding-top: 7px;
+  background: $white;
+  font-size: 16px;
+  width: 25px;
+  height: 28px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+body {
+  @include flex();
+  height: $body-height;
+  flex-direction: column;
+  justify-content: center;
+}
+.item {
+  @include flex();
+  &:nth-child(odd) {
+    background-color: $odd-background;
+  }
+  &:nth-child(even) {
+    background-color: $even-background;
+  }
+  padding: 20px;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  height: 70px;
+  width: 200px;
+  text-align: justify;
+}
+.modal-container {
+  margin: 0 auto;
+  position: relative;
+  width: 160px;
+  display: flex;
+  justify-content: flex-end;
+
+  .modal-backdrop {
+    height: 0;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease-in;
+  }
+  #modal-toggle {
+    @include modal();
+    position: absolute;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+
+    &:checked ~ .modal-backdrop {
+      @include modal();
+      background-color: $black;
+      position: fixed;
+      z-index: 9;
+      pointer-events: none;
+      opacity: 1;
+    }
+    &:checked ~ .modal-backdrop .modal-content {
+      @include check();
+    }
+    &:checked ~ .modal-backdrop .modal-content .modal-close {
+      @include modal-close();
+    }
+    &:checked ~ .modal-backdrop .modal-content .modal-close:hover {
+      color: $dark;
+    }
+    @media (max-width: 400px) {
+      &:checked ~ .modal-backdrop .modal-content {
+        left: 0;
+      }
+    }
+  }
+  #modal-toggle1 {
+    @extend #modal-toggle;
+  }
+  #modal-toggle2 {
+    @extend #modal-toggle;
+  }
+  #modal-toggle3{
+    @extend #modal-toggle;
+  }
+}
+
+.icon {
+  @include padding();
+  font-size: 30px;
+  color: $black;
+}
+.description {
+  @include padding();
+}
